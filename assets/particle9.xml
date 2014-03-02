@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<EmitterConfig>
+<Emission value="30"/>
+<Lifetime value="-1.000"/>
+<Direction value="4.175"/>
+<Spread value="6.283"/>
+<Relative value="0"/>
+<Life Min="0.595" Max ="2.262"/>
+<Speed Min="119.048" Max ="66.667"/>
+<Gravity Min="-14.286" Max ="-14.286"/>
+<RadialAccel Min="-71.429" Max ="-71.429"/>
+<TangentialAccel Min="-14.286" Max ="-14.286"/>
+<Size Start="2.732" End ="1.897" Var ="0.000"/>
+<Rotation Start="0.000" End ="0.000" Var ="0.000"/>
+<ColorVar value="0.206"/>
+<AlphaVar value="0.000"/>
+<StartColor r="0.976" g="1.000" b="1.000" a="1.000"/>
+<EndColor r="0.976" g="0.865" b="0.929" a="0.929"/>
+</EmitterConfig>
+<!-- Converter by Luis Santos AKA DJOKER-->

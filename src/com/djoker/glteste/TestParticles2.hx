@@ -1,5 +1,6 @@
 package com.djoker.glteste;
 
+import flash.utils.ByteArray;
 import haxe.ui.toolkit.core.Toolkit;
 import haxe.ui.toolkit.core.Root;
 import haxe.ui.toolkit.containers.VBox;
@@ -13,6 +14,8 @@ import haxe.ui.toolkit.controls.CheckBox;
 import haxe.ui.toolkit.controls.Text;
 
 import flash.events.MouseEvent;
+
+
 import haxe.ui.toolkit.core.Macros;
 
 import com.engine.game.Entity;
@@ -37,10 +40,15 @@ import com.engine.particles.ParticleEmitter;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFormat;
+import flash.Lib;
 
 
 
-
+#if neko
+import systools.Dialogs;
+import sys.io.File;
+import sys.io.FileOutput;
+#end
 /**
  * ...
  * @author djoker
@@ -96,6 +104,7 @@ class TestParticles2 extends Screen
    
    var continuous:CheckBox;
     var tex:Texture;
+
    
    public function addHScrol(x:Float, y:Float, w:Float, h:Float, min:Float, max:Float,def:Float,caption:String="label"):HScroll
    {
@@ -193,12 +202,12 @@ class TestParticles2 extends Screen
 //lifetime
 
 var posy:Float = 40;
-			lifeSlider    = addHScrol(10, posy, 149, 6, -2, 100, 50, 'Life');
+			lifeSlider    = addHScrol(10, posy, 149, 6, -2, 100, 50, 'Mouse Position');
 			continuous = new CheckBox();
 			continuous.x = 10;
 			continuous.y = 10;
 			root.addChild(continuous);
-			continuous.selected = true;
+			continuous.selected = false;
 			 var lb:Text = new Text();
 			 lb.x = 0;
 			 lb.y = 0;
@@ -516,12 +525,121 @@ but.text = 'Kill';
 root.addChild(but);
 	
 
+	 //
+//downloader= new FileReference();
+	 #if neko
+	 var but:Button = new Button();
+but.x = game.screenWidth/2+80;
+but.y = game.screenHeight-30;
+but.height = 25;
+
+but.addEventListener(UIEvent.CLICK, function(e:UIEvent) 
+{
+
+var filters: FILEFILTERS = 
+			{ count: 1
+			, descriptions: ["Xml files"]
+			, extensions: ["*.xml"]			
+			};		
+		var  result = Dialogs.openFile
+			( "Select a file please!"
+			, "Please select particle system"
+			, filters 
+			);
+		//trace(result);		
+		
+
+		var ba2:ByteArray = ByteArray.readFile(result[0]);
+		if (ba2.bytesAvailable > 1)
+		{
+					pmanager.Stop();
+		pmanager.FInfo = null;
+        pmanager.FInfo = new ParticleSystemInfo();
+
+		pmanager.FInfo.parseInfoFromString(ba2.toString());
+		loadDefaults();
+		pmanager.Fire();
+		}
+
+		
+		
+
+});
+but.text = 'Load Particle';
+root.addChild(but);
+//****************************
+ var but:Button = new Button();
+but.x = game.screenWidth/2-80;
+but.y = game.screenHeight-30;
+but.height = 25;
+
+but.addEventListener(UIEvent.CLICK, function(e:UIEvent) 
+{
+
+var filters: FILEFILTERS = 
+			{ count: 1
+			, descriptions: [ "Hge psi files"]
+			, extensions: ["*.psi"]			
+			};		
+		var  result = Dialogs.openFile
+			( "Select a file please!"
+			, "Please select particle system"
+			, filters 
+			);
+		//trace(result);		
+		
+
+		pmanager.Stop();
+		pmanager.FInfo = null;
+        pmanager.FInfo = new ParticleSystemInfo();
+		var ba2:ByteArray = ByteArray.readFile(result[0]);
+		pmanager.FInfo.loadInfoFromBytes(ba2);
+		loadDefaults();
+		pmanager.Fire();
+
+		
+		
+
+});
+but.text = 'Import PSI';
+root.addChild(but);
+//*****
+ var but:Button = new Button();
+but.x = game.screenWidth/2+10;
+but.y = game.screenHeight-30;
+but.height = 25;
+
+but.addEventListener(UIEvent.CLICK, function(e:UIEvent) 
+{
+
+	
+		var  result = Dialogs.saveFile
+			( "Select Particle as XML"
+			, "Particles"
+			, "" // initial path, for windows only
+			);
+		trace(result);		
+
+			  var f:FileOutput = File.write(result);
+               f.writeString( pmanager.FInfo.toXml());
+               f.close();
+			
+		
+
+		
+
+});
+but.text = 'Save';
+root.addChild(but);
+#end
 		 
 		 game.clarColor(0, 0, 0.4);
 
 
 	}
 	
+	
+
 	public function onDown():Void
 	{
 		
@@ -602,7 +720,7 @@ root.addChild(but);
       batch.End();
 	
 	 
-	   caption.text = "Lengh"+pmanager.FParticles.length+"\n Alive:"+pmanager.nParticlesAlive;
+	   caption.text = "Particles Alive:"+pmanager.nParticlesAlive;
 
 	}
 

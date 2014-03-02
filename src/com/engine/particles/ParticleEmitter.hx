@@ -111,9 +111,178 @@ ColorEnd.a=0.286;
 			
 		}
 		
+		public function toXml():String
+		{
+			var result:String;
+			
+			result='<?xml version="1.0"?>\n'+
+            '<EmitterConfig>\n'+
+
+'<Emission value="'+Emission+'"/>\n'+
+'<Lifetime value="'+Lifetime+'"/>\n'+
+'<Direction value="'+Direction+'"/>\n'+
+'<Spread value="'+Spread+'"/>\n'+
+'<Relative value="'+Relative+'"/>\n'+
+
+
+'<Life Min="' + ParticleLifeMin + '" Max="' + ParticleLifeMax + '"/>\n' +
+'<Speed Min="' + SpeedMin + '" Max="' + SpeedMin + '"/>\n' +
+'<RadialAccel Min="' + RadialAccelMin + '" Max="' + RadialAccelMax + '"/>\n' +
+'<TangentialAccel Min="' + TangentialAccelMin + '" Max="' + TangentialAccelMax + '"/>\n' +
+
+'<Size Start="' + SizeStart + '" End="' + SizeEnd + '" Var="' + SizeVar + '"/>\n' +
+'<Rotation Start="' + SpinStart + '" End="' + SpinEnd + '" Var="' + SpinVar + '"/>\n' +
+
+'<ColorVar value="' + ColorVar + '"/>\n' +
+'<AlphaVar value="' + AlphaVar + '"/>\n' +
+
+'<StartColor r="' + ColorStart.r + '" g="' + ColorStart.g + '" b="' + ColorStart.b + '" a="' + ColorStart.a + '"/>\n' +
+'<ColorEnd r="' + ColorEnd.r + '" g="' + ColorEnd.g + '" b="' + ColorEnd.b + '" a="'+ColorEnd.a+'"/>\n' +
+
+'</EmitterConfig>\n'+
+'<!-- Converter by Luis Santos AKA DJOKER-->' ;
+return result;
+
+		}
     public  function parseInfoFromFile(info:String) 
 	{
 		var xml:Xml = Xml.parse (Assets.getText(info));
+
+		
+	
+	
+	   for (child in xml) 
+		{
+			if (Util.isValidElement(child)) 
+			{
+				for (data in child)
+				{
+					if (Util.isValidElement(data)) 
+			        {
+						if (data.nodeName == "Emission")
+						{
+							this.Emission=Std.parseInt(data.get("value"));
+						}
+						if (data.nodeName == "Lifetime")
+						{
+							this.Lifetime=Std.parseFloat(data.get("value"));
+						}
+						if (data.nodeName == "Direction")
+						{
+							this.Direction=Std.parseFloat(data.get("value"));
+						}
+						if (data.nodeName == "Spread")
+						{
+							this.Spread=Std.parseFloat(data.get("value"));
+						}			
+	                	if (data.nodeName == "Relative")
+						{
+							this.Relative=Std.parseInt(data.get("value"));
+						}	
+						if (data.nodeName == "Life")
+						{
+							this.ParticleLifeMin = Std.parseFloat(data.get("Min"));
+							this.ParticleLifeMax=Std.parseFloat(data.get("Max"));
+						}						
+						if (data.nodeName == "Speed")
+						{
+							this.SpeedMin = Std.parseFloat(data.get("Min"));
+							this.SpeedMax=Std.parseFloat(data.get("Max"));
+						}	
+						if (data.nodeName == "Gravity")
+						{
+							this.GravityMin = Std.parseFloat(data.get("Min"));
+							this.GravityMax=Std.parseFloat(data.get("Max"));
+						}		
+						if (data.nodeName == "RadialAccel")
+						{
+							this.RadialAccelMin = Std.parseFloat(data.get("Min"));
+							this.RadialAccelMax=Std.parseFloat(data.get("Max"));
+						}			
+						if (data.nodeName == "TangentialAccel")
+						{
+							this.TangentialAccelMin = Std.parseFloat(data.get("Min"));
+							this.TangentialAccelMax=Std.parseFloat(data.get("Max"));
+						}							
+						if (data.nodeName == "Size")
+						{
+							this.SizeStart = Std.parseFloat(data.get("Start"));
+							this.SizeEnd = Std.parseFloat(data.get("End"));
+							this.SizeVar=Std.parseFloat(data.get("Var"));
+						}	
+						if (data.nodeName == "Rotation")
+						{
+							this.SpinStart = Std.parseFloat(data.get("Start"));
+							this.SpinEnd = Std.parseFloat(data.get("End"));
+							this.SpinVar=Std.parseFloat(data.get("Var"));
+						}			
+					   if (data.nodeName == "ColorVar")
+						{
+							this.ColorVar=Std.parseFloat(data.get("value"));
+						}		
+					   if (data.nodeName == "AlphaVar")
+						{
+							this.AlphaVar=Std.parseFloat(data.get("value"));
+						}	
+					   if (data.nodeName == "StartColor")
+						{
+							this.ColorStart.r = Std.parseFloat(data.get("r"));
+							this.ColorStart.g = Std.parseFloat(data.get("g"));
+							this.ColorStart.b = Std.parseFloat(data.get("b"));
+							this.ColorStart.a =Std.parseFloat(data.get("a"));
+						}			
+					   if (data.nodeName == "EndColor")
+						{
+							this.ColorEnd.r = Std.parseFloat(data.get("r"));
+							this.ColorEnd.g = Std.parseFloat(data.get("g"));
+							this.ColorEnd.b = Std.parseFloat(data.get("b"));
+							this.ColorEnd.a =Std.parseFloat(data.get("a"));
+						}							
+					}
+				}
+			}
+		}
+		/*
+			trace("Emission "+Emission );
+			trace("Lifetime "+Lifetime  );
+			trace("ParticleLifeMin "+ParticleLifeMin  );
+			trace("ParticleLifeMax "+ParticleLifeMax  );
+			trace("Direction "+Direction );
+			trace("Spread "+Spread );
+			trace("Relative "+Relative );
+			trace("SpeedMin "+SpeedMin  );
+			trace("SpeedMax "+SpeedMax  );
+			trace("GravityMin "+GravityMin  );
+			trace("GravityMax"+GravityMax  );
+			trace("radial min "+RadialAccelMin  );
+			trace("radial max "+RadialAccelMax  );
+			trace("Tangent Min "+TangentialAccelMin  );
+			trace("Tangetn Max "+TangentialAccelMax  );
+			trace("SizeStart "+SizeStart  );
+			trace("SizeEnd "+SizeEnd  );
+			trace("SizeVar "+SizeVar  );
+			trace("SpinStart "+SpinStart  );
+			trace("SpinEnd "+SpinEnd  );
+			trace("SpinVar "+SpinVar  );
+			trace("ColorVar "+ColorVar  );
+			trace("AlphaVar "+AlphaVar  );
+			
+			trace("start color");
+			trace(ColorStart.r );
+			trace(ColorStart.g );
+			trace(ColorStart.b );
+			trace(ColorStart.a);
+			
+			trace("end color");
+			trace(ColorEnd.r  );
+			trace(ColorEnd.g );
+			trace(ColorEnd.b );
+			trace(ColorEnd.a);
+			*/
+	}
+	 public  function parseInfoFromString(info:String) 
+	{
+		var xml:Xml = Xml.parse (info);
 
 		
 	
@@ -343,7 +512,101 @@ ColorEnd.a=0.286;
 			   
 		
 	}
+	public  function loadInfoFromBytes(bytes:ByteArray) 
+	{
+		   	bytes.endian = Endian.LITTLE_ENDIAN;
+			
+			   this.Frame = bytes.readInt() & 0xFFFF;
+			   this.Blend = this.Frame >> 16;
+			   
+			   this.Emission = bytes.readInt();
+			   this.Lifetime = bytes.readFloat();
+			   this.ParticleLifeMin = bytes.readFloat();
+			   this.ParticleLifeMax = bytes.readFloat();
+			   this.Direction =  bytes.readFloat();// * 180 / 3.14159265358979323846;
+			   this.Spread =  bytes.readFloat();// * 180 / 3.14159265358979323846;
+			   this.Relative =  bytes.readInt();
+			   
+			   this.SpeedMin = bytes.readFloat();
+			   this.SpeedMax = bytes.readFloat();
+			   this.GravityMin = bytes.readFloat();
+			   this.GravityMax = bytes.readFloat();
+			   this.RadialAccelMin = bytes.readFloat();
+			   this.RadialAccelMax = bytes.readFloat();
+			   this.TangentialAccelMin = bytes.readFloat();
+			   this.TangentialAccelMax = bytes.readFloat();
+			   this.SizeStart = bytes.readFloat();
+			   this.SizeEnd = bytes.readFloat();
+			   this.SizeVar = bytes.readFloat();
+		       this.SpinStart = bytes.readFloat();
+			   this.SpinEnd = bytes.readFloat();
+			   this.SpinVar = bytes.readFloat();
+
+			   
+			   this.ColorStart.r = bytes.readFloat();
+			   this.ColorStart.g = bytes.readFloat();
+			   this.ColorStart.b = bytes.readFloat();
+			   this.ColorStart.a =bytes.readFloat();
 		
+			   
+			   this.ColorEnd.r = bytes.readFloat();
+			   this.ColorEnd.g = bytes.readFloat();
+			   this.ColorEnd.b = bytes.readFloat();
+			   this.ColorEnd.a = bytes.readFloat();
+			   
+	
+
+			   
+			   this.ColorVar = bytes.readFloat();
+			   this.AlphaVar = bytes.readFloat();
+
+			//trace(Emission );		
+			   bytes = null;
+			   /*
+			trace(Frame);   
+			trace(Blend);  
+			
+			trace("Emission "+Emission );
+			trace("Lifetime "+Lifetime  );
+			trace("ParticleLifeMin "+ParticleLifeMin  );
+			trace("ParticleLifeMax "+ParticleLifeMax  );
+			trace("Direction "+Direction );
+			trace("Spread "+Spread );
+			trace("Relative "+Relative );
+			trace("SpeedMin "+SpeedMin  );
+			trace("SpeedMax "+SpeedMax  );
+			trace("GravityMin "+GravityMin  );
+			trace("GravityMax"+GravityMax  );
+			trace("radial min "+RadialAccelMin  );
+			trace("radial max "+RadialAccelMax  );
+			trace("Tangent Min "+TangentialAccelMin  );
+			trace("Tangetn Max "+TangentialAccelMax  );
+			trace("SizeStart "+SizeStart  );
+			trace("SizeEnd "+SizeEnd  );
+			trace("SizeVar "+SizeVar  );
+			trace("SpinStart "+SpinStart  );
+			trace("SpinEnd "+SpinEnd  );
+			trace("SpinVar "+SpinVar  );
+			trace("ColorVar "+ColorVar  );
+			trace("AlphaVar "+AlphaVar  );
+			
+			trace("start color");
+			trace(ColorStart.r );
+			trace(ColorStart.g );
+			trace(ColorStart.b );
+			trace(ColorStart.a);
+			
+			trace("end color");
+			trace(ColorEnd.r  );
+			trace(ColorEnd.g );
+			trace(ColorEnd.b );
+			trace(ColorEnd.a);
+			
+*/
+			
+			   
+		
+	}	
 		
 
 		public inline function Smoke():Void

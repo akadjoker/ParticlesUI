@@ -10,7 +10,7 @@
 	
 	<window background="#000000" fps="60" />
 	<window width="900" height="640" unless="mobile" />
-	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+	<window orientation="landscape" vsync="true" antialiasing="0" if="cpp" />
 	
 	<!-- classpath, haxe libs -->
 	<source path="src" />
@@ -19,6 +19,8 @@
 <haxelib name="actuate" />
 <haxelib name="hscript" />	
 <haxelib name="haxeui" />	
+<haxelib name="systools" />	
+
 
 	
 	<!-- assets -->

@@ -9,7 +9,7 @@ import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.events.MouseEvent;
 
-
+import com.engine.misc.FPS;
 
 import openfl.display.OpenGLView;
 import openfl.gl.GL;
@@ -69,7 +69,7 @@ trace(System.totalMemory * 0.000000954);
 this.setScreen(new TestParticles2());
 
 
-
+	addChild(new FPS(10, this.screenHeight-20, 0xff00ff));
 		
 
 }

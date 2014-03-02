@@ -17,7 +17,7 @@ import flash.display.Stage;
 
 import com.engine.render.PrimitiveShader;
 import com.engine.render.SpriteShader;
-import com.engine.misc.FPS;
+
 
 import flash.display.DisplayObject;
 import flash.display.Sprite;
@@ -148,7 +148,7 @@ public static var spriteShader:SpriteShader;
 	container = new Sprite();
 	container.addEventListener(Event.ADDED_TO_STAGE, addedToStage);		
 	stage.addChild(container);
-	//addChild(new FPS(10, 10, 0xff0ff));
+
 	//addChild(new Stats());
 	prevFrame = Lib.getTimer();
 	
