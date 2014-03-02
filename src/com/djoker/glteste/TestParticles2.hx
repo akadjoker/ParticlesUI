@@ -102,6 +102,8 @@ class TestParticles2 extends Screen
    var   ColorEndB:HScroll;
    var   ColorEndA:HScroll;
    
+      
+   var lifeLoop:CheckBox;
    var continuous:CheckBox;
     var tex:Texture;
 
@@ -202,20 +204,32 @@ class TestParticles2 extends Screen
 //lifetime
 
 var posy:Float = 40;
-			lifeSlider    = addHScrol(10, posy, 149, 6, -2, 100, 50, 'Mouse Position');
+			lifeSlider    = addHScrol(10, posy, 149, 6, -1, 50, 1, 'Life');
 			continuous = new CheckBox();
-			continuous.x = 10;
-			continuous.y = 10;
+			continuous.x= game.screenWidth-150;
+			continuous.y= game.screenHeight-20;
 			root.addChild(continuous);
 			continuous.selected = false;
+			
 			 var lb:Text = new Text();
 			 lb.x = 0;
 			 lb.y = 0;
-			 lb.text = 'Alive';
+			 lb.text = 'Move by Mouse';
 			 lb.inlineStyle.color = 0xffffff;
 			 continuous.addChild(lb);
 
-			 
+			 lifeLoop = new CheckBox();
+			lifeLoop.x= game.screenWidth-150;
+			lifeLoop.y= game.screenHeight-50;
+			root.addChild(lifeLoop);
+			lifeLoop.selected = true;
+			
+			 var lb:Text = new Text();
+			 lb.x = 0;
+			 lb.y = 0;
+			 lb.text = 'Life Loop';
+			 lb.inlineStyle.color = 0xffffff;
+			 lifeLoop.addChild(lb);
 			   
 			   posy += 24;
 			   emissionSlider=addHScrol(10, posy, 149, 6, 0, 300,100,'Emission');
@@ -225,9 +239,9 @@ var posy:Float = 40;
 			   spreadSlider = addHScrol(9, posy, 149, 6, 0, 2 * M_PI, M_PI, 'Spread');
 			
 			   posy += 30;
-	         SpeedMin = addHScrol(9, posy, 149, 6, -300, 300, 0,'SpeedMin');
+	         SpeedMin = addHScrol(9, posy, 149, 6, -600, 600, 0,'SpeedMin');
 			 posy += 24;
-			 SpeedMax = addHScrol(9, posy, 149, 6, -300, 300, 0,'SpeedMax');
+			 SpeedMax = addHScrol(9, posy, 149, 6, -600, 600, 0,'SpeedMax');
 
 			   posy += 35;
 			 gravityMinSlider = addHScrol(9, posy, 149, 6, -1000, 1000, 0,'Gravity Min');
@@ -413,8 +427,8 @@ but.width = 140;
 but.addEventListener(UIEvent.CLICK, function(e:UIEvent) 
 { 
 
-        SpeedMin.pos = Util.randf( -300,300);
-		SpeedMax.pos=Util.randf(-300, 300);
+        SpeedMin.pos = Util.randf( -600,600);
+		SpeedMax.pos=Util.randf(-600, 600);
 		
 			
 	
@@ -446,8 +460,8 @@ but.addEventListener(UIEvent.CLICK, function(e:UIEvent)
 		spinEndSlider.pos  =Util.randf(-50, 50);
 		spinVarSlider.pos  = Util.randf(0, 255);
 		
-		SpeedMin.pos = Util.randf( -300,300);
-		SpeedMax.pos=Util.randf(-300, 300);
+		SpeedMin.pos = Util.randf( -600,600);
+		SpeedMax.pos=Util.randf(-600, 600);
 		
 		
 	ColorEndR.pos = Util.randf(0, 255);
@@ -506,11 +520,11 @@ root.addChild(but);
 
      
 		loadDefaults();
-		
+		/*
 	 
 	 var but:Button = new Button();
-but.x = 80;
-but.y = 10;
+but.x = game.screenWidth-50;
+but.y = game.screenHeight-50;
 but.height = 25;
 
 but.addEventListener(UIEvent.CLICK, function(e:UIEvent) 
@@ -519,11 +533,11 @@ but.addEventListener(UIEvent.CLICK, function(e:UIEvent)
 pmanager.FAge = 0;
 
 
-trace("kill");
+
 });
 but.text = 'Kill';
 root.addChild(but);
-	
+	*/
 
 	 //
 //downloader= new FileReference();
@@ -699,9 +713,9 @@ root.addChild(but);
 		 
 		
 
-    if (continuous.selected) 
+    if (lifeLoop.selected==true) 
 	{
-		//pmanager.FAge = -1;
+		pmanager.FAge = -1;
 
 	} else 
 	{
@@ -738,7 +752,7 @@ root.addChild(but);
 	
 		 pmanager.FireAt(game.screenWidth / 2, game.screenHeight / 2);
 	}
-		// pmanager.FAge = -1;
+		// pmanager.FAge = 0;
 
 	
 	  

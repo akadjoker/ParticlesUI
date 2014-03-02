@@ -75,7 +75,7 @@ import sys.io.FileOutput;
 Frame = 0;
 Blend = 0;
 Emission=20;
-Lifetime=-1.000;
+Lifetime=10.000;
 ParticleLifeMin=0.437;
 ParticleLifeMax=0.992;
 Direction=0.000;
